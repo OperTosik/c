@@ -39,7 +39,7 @@ int gauss(double *a, int m, int n, double eps/* = 1e-12*/) {
         for (int l = i + 1; l < m; ++l) {
             double c = a[l*n + j] / r;
             for (int s = j; s < n; ++s) {
-                a[l*n + s] -= a[l*n + s]*c;
+                a[l*n + s] -= a[i*n + s]*c;
             }
         }
         ++i; ++j;
@@ -56,7 +56,7 @@ bool readMatrix(FILE *f, double* &a, int &m, int &n) {
             if (fscanf(f, "%lg", &a[i*n + j]) < 1) {
                 delete[] a;
                 a = 0;
-                
+
             }
         }
     }
