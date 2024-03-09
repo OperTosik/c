@@ -4,7 +4,7 @@
 #include <math.h>
 
 int gauss(double *a, int m, int n, double eps = 1e-12);
-// double *f(double*array, double m, double n);
+int rev_str(double *a, int m, int n);
 
 int main(void) {
     FILE*fin = fopen("input.txt", "r");
@@ -49,16 +49,16 @@ int main(void) {
     printf("%d", gauss(array, m, n));
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
-            fprintf(fout, "%lf ", array[i*2*n  + j]);
-        }
-        fprintf(fout, "\n");
-    }
-    for (int i = 0; i < n; ++i) {
-        for (int j = n; j < 2*n; ++j) {
             fprintf(fout, "%lf ", array[i*2*n + j]);
         }
         fprintf(fout, "\n");
     }
+    // for (int i = 0; i < n; ++i) {
+    //     for (int j = n; j < 2*n; ++j) {
+    //         fprintf(fout, "%lf ", array[i*2*n + j]);
+    //     }
+    //     fprintf(fout, "\n");
+    // }
     fclose(fout);
     free(array);
     return 0;
@@ -88,7 +88,7 @@ int gauss(double *a, int m, int n, double eps/* = 1e-12*/) {
 
         if (k != i) {
             //swap i-th and k-th rows
-            for (int s = j; s < m; ++s){
+            for (int s = j; s < 2*n; ++s){
                 double tmp = a[i*2*n + s];
                 a[i*2*n + s] = a[k*2*n + s];
                 a[k*2*n + s] = (-tmp);
@@ -100,7 +100,7 @@ int gauss(double *a, int m, int n, double eps/* = 1e-12*/) {
         for (int l = 0; l != i && l < m; ++l) {
             double c = a[l*2*n + j] / r;
             for (int s = j; s < 2*n; ++s) {
-                a[l*2*n + s] -= a[l*2*n + s]*c;
+                a[l*2*n + s] -= a[i*2*n + s]*c;
             }
         }
         ++i; ++j;
