@@ -22,6 +22,7 @@ int main(void) {
     int rank = gauss(a, m, n);
     printf("rank of matrix: %d\n", rank);
     
+    
     reversePass(a, m, n, rank);
     printf("Reverse matrix\n");
     writeMatrix(stdout, a, m, 2*m, m, n);
