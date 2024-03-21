@@ -13,10 +13,16 @@ bool writeResult(const char* path, const double* a, int m, int n, int rank);
 
 int main(void) {
     double *a;
+    double *b;
     int m, n;
     if (!readMatrix("input.txt", a, m, n)) {
         perror("Could not read the matrix");
         delete[] a;
+        return -1;
+    }
+    if (!readMatrix("input.txt", b, m, n)) {
+        perror("Could not read the matrix");
+        delete[] b;
         return -1;
     }
     writeMatrix(stdout, a, m, n); // Print the initial maatrix
@@ -24,8 +30,8 @@ int main(void) {
     int rank = gauss(a, m, n);
     // printf("rank of matrix: %d\n", rank);
     reversePass(a, m, n, rank);
-    writeResult(stdout, a, m, n, rank);       // Print the Result
-    writeResult("output.txt", a, m, n, rank); // and write in into the file
+    writeResult(stdout, b, m, n, rank);       // Print the Result
+    writeResult("output.txt", b, m, n, rank); // and write in into the file
     
     delete[] a;
     return 0;
