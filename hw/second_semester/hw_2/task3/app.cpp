@@ -22,12 +22,12 @@ int main(void) {
     
     int rank = gauss(a, m, n);
     printf("rank of matrix: %d\n", rank);
-    // printf("Row Echelon Form of matrix:\n");
-    // writeMatrix(stdout, a, m, n);       // Print the matrix
+    printf("Row Echelon Form of matrix:\n");
+    writeMatrix(stdout, a, m, n);       // Print the matrix
     
-    // reversePass(a, m, n, rank);
-    // printf("Reverse Pass (Reduced Row Echelon Form):\n");
-    // writeMatrix(stdout, a, m, n);
+    reversePass(a, m, n, rank);
+    printf("Reverse Pass (Reduced Row Echelon Form):\n");
+    writeMatrix(stdout, a, m, n);
     printf("Answer:\n");
     writeResult(stdout, a, m, n);
     writeResult("output.txt", a, m, n); // and write in into the file
@@ -38,11 +38,11 @@ int main(void) {
 
 int gauss(double *a, int m, int n, double eps) {
     int i = 0; int j = 0;
-    while (i < m && j < n) {
+    while (i < m && j < n - 1) {
         // Search for the maximal element in j-th column
         double maxelem = fabs(a[i*n + j]);
         int k = i;
-        for (int l = i+1; l < m; ++l) {
+        for (int l = i + 1; l < m; ++l) {
             if (fabs(a[l*n + j]) > maxelem) {
                 maxelem = fabs(a[l*n + j]);
                 k = l;
