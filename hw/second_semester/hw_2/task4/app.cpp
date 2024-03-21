@@ -155,10 +155,11 @@ void reversePass(double *a, int m, int n, int rank, double eps) {
 }
 
 bool writeResult(FILE* f, const double* a, int m, int n) {
+    double eps = 1e-12;
     for (int i = 0; i < m; ++i) {
         double temp = 0; //value of lider
         for (int j = 0; j < n; ++j) {
-            if (a[i*n + j] == 1.) {
+            if (a[i*n + j] - 1.0 < eps) {
                 //find lider of row
                 for (int k = j + 1; k < n; ++k){
                     temp -= a[i*n + k];
