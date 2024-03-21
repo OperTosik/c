@@ -22,7 +22,7 @@ int main(void) {
     writeMatrix(stdout, a, m, n); // Print the initial maatrix
     
     int rank = gauss(a, m, n);
-    printf("rank of matrix: %d\n", rank);
+    // printf("rank of matrix: %d\n", rank);
     reversePass(a, m, n, rank);
     writeResult(stdout, a, m, n, rank);       // Print the Result
     writeResult("output.txt", a, m, n, rank); // and write in into the file
@@ -148,6 +148,8 @@ void reversePass(double *a, int m, int n, int rank, double eps) {
 }
 
 bool writeResult(FILE* f, const double* a, int m, int n, int rank) {
+    fprintf(f, "Rank: %d\n", rank);
+    fprintf(f, "Lenght of vectors: %d\n", n);
     for (int i = 0; i < rank; ++i) {
         for (int j = 0; j < n; ++j) {
             if (j > 0)
