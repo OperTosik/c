@@ -50,13 +50,13 @@ int main(void) {
         printf("n: ");
         scanf("%d", &n);
         double y = integral_trapezium(f, a, b, n);
-        printf("Integral_trapezium = %lf\n", y);
+        printf("Integral_trapezium = %f\n", y);
         //cout << "Integral_trapezium = " << y << endl;
         y = integral_simpson(f, a, b, n);
-        printf("Integral_simpson = %lf\n", y);
+        printf("Integral_simpson = %f\n", y);
         //cout << "Integral_simpson = " << y << endl;
         double y_precize = antider_f(b) - antider_f(a);
-        printf("Integral_trapezium = %lf\n", y_precize);
+        printf("Must be = %f\n", y_precize);
         //cout << "Must_be = " << y << endl;
         
     }
@@ -106,7 +106,7 @@ double integral_simpson(
     }
 
     double s2 = 0.; //Четные точки
-    x = a + dx;
+    x = a + 2*dx;
     for (int i = 2; i < n; i += 2) {
         s2 += f(x);
         x += 2. * dx;

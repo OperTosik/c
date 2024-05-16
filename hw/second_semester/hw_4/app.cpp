@@ -39,7 +39,6 @@ double antider_f(double);
 int main(void) {
     //\int_a^b f(x)dx = (f(a) + 4f((a+b)/2) + f(b))(b - a)
     //Формула Симпсона
-    double a, b;
     while (true) {
         double a, b;
         int n;
