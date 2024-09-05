@@ -1,6 +1,5 @@
     #include <iostream>
-    #include <string>
-    
+    #include <string>   
     using namespace std;
     
     std::string removeString(string s, string rmStr) {
