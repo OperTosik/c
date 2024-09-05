@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <malloc.h>
 #include <stdlib.h>
 
 void f(double *array_a, double *array_b, int len_a, int len_b, double*d, int *main_flag);

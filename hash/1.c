@@ -4,7 +4,7 @@
 int ReadFile(const char *filename, int *rows, int *cols, int ***arr);
 void PrintArray(int rows, int cols, int **arr);
 void WriteToFile(const char *filename, int rows, int cols, int **arr);
-int RemoveRows(int N, int M, int **arr);
+void RemoveRows(int N, int M, int **arr);
 
 int ReadFile(const char *filename, int *rows, int *cols, int ***arr) {
     FILE *reader = fopen(filename, "r");
@@ -80,8 +80,7 @@ void WriteToFile(const char *filename, int rows, int cols, int **arr) {
     fclose(writer);
 }
 
-int RemoveRows(int N, int M, int **arr) {
-    int amount = 0;
+void RemoveRows(int N, int M, int **arr) {
     int *max = (int *)malloc(M * sizeof(int));
 	int *maxIndex = (int *)malloc(M * sizeof(int));
     //find max element in colomn and his index, wtire in arrays
@@ -105,27 +104,16 @@ int RemoveRows(int N, int M, int **arr) {
                 break;
             }
         }
-        if(isMax) {
-            for(int k = i; k < N; k++) {
-            //begining by i row rewrite rows
-                for (int j = 0; j < M; j++) {
-                    if (k + 1 < N) {
-                        arr[k][j] = arr[k + 1][j];
-                    }
-                }
-            }
-            amount++;
-            N--;
-        }
+        if(isMax)
+            for(int j = 0; j < M; j++)
+                arr[i][j] = -1;
 		
     }
 	free(max);
 	free(maxIndex);
-    return amount;
 }
 
 int main(void) {
-    int amount;
     int rows = 0, cols = 0;
     int **arr;
 
@@ -135,12 +123,12 @@ int main(void) {
     }
 printf("given: \n");
     PrintArray(rows, cols, arr);
-    amount = RemoveRows(rows, cols, arr);
+    RemoveRows(rows, cols, arr);
 printf("new: \n");
-    PrintArray(rows - amount, cols, arr);
-    WriteToFile("res.txt", rows - amount, cols, arr);
+    PrintArray(rows, cols, arr);
+    WriteToFile("res.txt", rows, cols, arr);
 	printf("\nArray in a row: ");
-	for (int m=0; m < (rows - amount)* cols; m++) printf("|%d|", arr[0][m]);
+	for (int m=0; m < rows* cols; m++) printf("|%d|", arr[0][m]);
 
     free(arr[0]);
     free(arr);

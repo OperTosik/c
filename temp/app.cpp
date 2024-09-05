@@ -1,31 +1,62 @@
-#include <iostream>
-#include <ctime>
+    #include <iostream>
+    #include <string>
+    
+    using namespace std;
+    
+    std::string removeString(string s, string rmStr) {
+        int i = s.find(rmStr);
+        // cout << rmStr << endl;
+        // cout << "i:" << i << endl;
+        return s.substr(0, i) + s.substr(i + rmStr.size());
+    }
+    
+    bool isMatch(string s, string p) {
+        string rmStr;
+        for (size_t i = 0; i < p.size(); ++i) {
+            if (p[i] == '*' || p[i] == '.') {
+                continue;
+            }
+            rmStr = p[i];
+            for (size_t j = i + 1; j < p.size(); ++j) {
+                if (p[j] != '*' && p[j] != '.') {
+                    rmStr = p.substr(i, j + 1);
+                }
+                else {
+                    break;
+                }
+            }
+            s = removeString(s, rmStr);
+            p = removeString(p, rmStr);
+            cout << s << endl;
+            cout << p << endl;
+            rmStr = "";
+        }
 
-using namespace std;
-
-string longestPalindrome(string s) {
-    if (s == "") return "";
-    int size = 1;
-    string temp;
-    string res = s.substr(0, 1);
-    for (int i = 0; i < s.size(); ++i) {
-        if (i + 1 < s.size() && s[i] == s[i + 1]) {
-            temp = s.substr(i, 2);
-            for (int j = i + 1; j < s.size(); ++j) {
-
+        int quantutyOfPpoint = 0;
+        bool flagOfStar = false;
+        for (size_t i = 0; i < s.size(); ++i) {
+            if (p[i] == '.') {
+                ++quantutyOfPpoint;
+            }
+            if (p[i] == '*') {
+                flagOfStar = true;
             }
         }
-    }
-    return res;
-}
 
-int main(void) {
-    clock_t start = clock();
-    string s = "";
-    string t = "fsghj";
-    // cout << string(t[1] + t[2]) << endl;
-    // cout << longestPalindrome(s) << endl;
-    clock_t end = clock();
-    cout << ((double) (end - start)) * 1000 / CLOCKS_PER_SEC << endl;
-    return 0;
-}
+        if (flagOfStar && quantutyOfPpoint <= s.size()) {
+            return true;
+        }
+        else if (!flagOfStar && flagOfStar == s.size()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    int main() {
+        cout << isMatch("mississippi", "mis*is*p*.") << endl;
+
+        return 0;
+    }
