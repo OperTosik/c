@@ -28,8 +28,8 @@ int main() {
 
     mVectorToCenter = radiusVector(mlat, mlon);
     getAxis(mVectorToCenter, axisX, axisY);
-    axisX.normalized();
-    axisY.normalized();
+    axisX.normalize();
+    axisY.normalize();
     mVector = mVectorToCenter + (axisX * x + axisY * y); //radius-vector (x, y)
     getSphericalCoordinates(mVector, lat, lon);
 
