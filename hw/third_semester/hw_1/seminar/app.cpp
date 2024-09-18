@@ -32,6 +32,7 @@ int main() {
 R3Graph::R3Vector radiusVector(double lat, double lon) {
     double phi = lon*PI/180.;   // Convert to radians
     double theta = lat*PI/180.;
+    std::cout << theta << std::endl;
     // Rotate ex around ez by angle phi: v0 = (cos(phi), sin(phi), 0.)
     // Rotate v0 in meridional plane by angle theta:
     // v1 = (cos(phi)*cos(theta), sin(phi)*cos(theta), sin(theta))
@@ -48,7 +49,6 @@ void earth2map(
     R3Graph::R3Vector n = radiusVector(mlat, mlon);
     R3Graph::R3Vector ex = nord.vectorProduct(n);
     ex.normalize();
-
     R3Graph::R3Vector ey = n.vectorProduct(ex);
     ey.normalize();
     R3Graph::R3Point origin(0., 0., 0.);
