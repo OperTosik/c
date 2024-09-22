@@ -78,5 +78,4 @@ void getSphericalCoordinates(
     double phi = atan(vector.y / vector.x);
     lat = theta * 180. / PI;
     lon = phi * 180. / PI;
-    return;
 }

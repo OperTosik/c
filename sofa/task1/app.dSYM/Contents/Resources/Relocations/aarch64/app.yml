@@ -1,0 +1,31 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     app
+relocations:
+  - { offsetInCU: 0x51EF, offset: 0x51EF, size: 0x8, addend: 0x0, symName: __ZStL8__ioinit, symObjAddr: 0x15CA0, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0x5478, offset: 0x5478, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100000E90, symSize: 0x38 }
+  - { offsetInCU: 0x3468, offset: 0x88F1, size: 0x8, addend: 0x0, symName: __Z7isdigiti, symObjAddr: 0x68, symBinAddr: 0x100000F80, symSize: 0x20 }
+  - { offsetInCU: 0x3C21, offset: 0x90AA, size: 0x8, addend: 0x0, symName: __ZStL8__ioinit, symObjAddr: 0x1A668, symBinAddr: 0x100008001, symSize: 0x0 }
+  - { offsetInCU: 0x4067, offset: 0x94F0, size: 0x8, addend: 0x0, symName: __ZNK5CIntN7getSignEv, symObjAddr: 0x1ACC, symBinAddr: 0x1000029E4, symSize: 0x30 }
+  - { offsetInCU: 0x4093, offset: 0x951C, size: 0x8, addend: 0x0, symName: __ZNK5CIntN4getNEv, symObjAddr: 0x1AB4, symBinAddr: 0x1000029CC, symSize: 0x18 }
+  - { offsetInCU: 0x40BF, offset: 0x9548, size: 0x8, addend: 0x0, symName: __ZN5CIntN3getEbi, symObjAddr: 0x18F8, symBinAddr: 0x100002810, symSize: 0x1BC }
+  - { offsetInCU: 0x412C, offset: 0x95B5, size: 0x8, addend: 0x0, symName: __ZNK5CIntN5printEv, symObjAddr: 0x1878, symBinAddr: 0x100002790, symSize: 0x80 }
+  - { offsetInCU: 0x4187, offset: 0x9610, size: 0x8, addend: 0x0, symName: __ZNK5CIntN3negEv, symObjAddr: 0x1794, symBinAddr: 0x1000026AC, symSize: 0xE4 }
+  - { offsetInCU: 0x41F1, offset: 0x967A, size: 0x8, addend: 0x0, symName: __ZNK5CIntNmiERKS_, symObjAddr: 0x119C, symBinAddr: 0x1000020B4, symSize: 0x5F8 }
+  - { offsetInCU: 0x435D, offset: 0x97E6, size: 0x8, addend: 0x0, symName: __ZNK5CIntNplERKS_, symObjAddr: 0xD40, symBinAddr: 0x100001C58, symSize: 0x45C }
+  - { offsetInCU: 0x4475, offset: 0x98FE, size: 0x8, addend: 0x0, symName: __ZN5CIntNaSERKS_, symObjAddr: 0xC68, symBinAddr: 0x100001B80, symSize: 0xD8 }
+  - { offsetInCU: 0x44D0, offset: 0x9959, size: 0x8, addend: 0x0, symName: __ZNK5CIntNixEi, symObjAddr: 0xBF4, symBinAddr: 0x100001B0C, symSize: 0x74 }
+  - { offsetInCU: 0x4535, offset: 0x99BE, size: 0x8, addend: 0x0, symName: __ZN5CIntND1Ev, symObjAddr: 0xBC0, symBinAddr: 0x100001AD8, symSize: 0x34 }
+  - { offsetInCU: 0x455D, offset: 0x99E6, size: 0x8, addend: 0x0, symName: __ZN5CIntND2Ev, symObjAddr: 0xB8C, symBinAddr: 0x100001AA4, symSize: 0x34 }
+  - { offsetInCU: 0x45C3, offset: 0x9A4C, size: 0x8, addend: 0x0, symName: __ZN5CIntNC1Eii, symObjAddr: 0x978, symBinAddr: 0x100001890, symSize: 0x214 }
+  - { offsetInCU: 0x4624, offset: 0x9AAD, size: 0x8, addend: 0x0, symName: __ZN5CIntNC2Eii, symObjAddr: 0x778, symBinAddr: 0x100001690, symSize: 0x200 }
+  - { offsetInCU: 0x46C6, offset: 0x9B4F, size: 0x8, addend: 0x0, symName: __ZN5CIntNC1ERKS_, symObjAddr: 0x6CC, symBinAddr: 0x1000015E4, symSize: 0xAC }
+  - { offsetInCU: 0x4748, offset: 0x9BD1, size: 0x8, addend: 0x0, symName: __ZN5CIntNC2ERKS_, symObjAddr: 0x620, symBinAddr: 0x100001538, symSize: 0xAC }
+  - { offsetInCU: 0x482D, offset: 0x9CB6, size: 0x8, addend: 0x0, symName: __ZN5CIntNC1EiPKc, symObjAddr: 0x3C0, symBinAddr: 0x1000012D8, symSize: 0x260 }
+  - { offsetInCU: 0x48D1, offset: 0x9D5A, size: 0x8, addend: 0x0, symName: __ZN5CIntNC2EiPKc, symObjAddr: 0x160, symBinAddr: 0x100001078, symSize: 0x260 }
+  - { offsetInCU: 0x4989, offset: 0x9E12, size: 0x8, addend: 0x0, symName: __ZN5CIntNC1Ev, symObjAddr: 0xF4, symBinAddr: 0x10000100C, symSize: 0x6C }
+  - { offsetInCU: 0x49B1, offset: 0x9E3A, size: 0x8, addend: 0x0, symName: __ZN5CIntNC2Ev, symObjAddr: 0x88, symBinAddr: 0x100000FA0, symSize: 0x6C }
+  - { offsetInCU: 0x49E4, offset: 0x9E6D, size: 0x8, addend: 0x0, symName: __Z9__isctypeim, symObjAddr: 0x0, symBinAddr: 0x100000F18, symSize: 0x68 }
+  - { offsetInCU: 0x3BF4, offset: 0xDA81, size: 0x8, addend: 0x0, symName: __ZStL8__ioinit, symObjAddr: 0x17A58, symBinAddr: 0x100008002, symSize: 0x0 }
+  - { offsetInCU: 0x3E5D, offset: 0xDCEA, size: 0x8, addend: 0x0, symName: __Z4funcv, symObjAddr: 0x0, symBinAddr: 0x100002A64, symSize: 0xA24 }
+...

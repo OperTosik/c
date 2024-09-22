@@ -1,0 +1,29 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     app
+relocations:
+  - { offsetInCU: 0x5153, offset: 0x5153, size: 0x8, addend: 0x0, symName: __ZStL8__ioinit, symObjAddr: 0x2A6A8, symBinAddr: 0x100008008, symSize: 0x0 }
+  - { offsetInCU: 0x583B, offset: 0x583B, size: 0x8, addend: 0x0, symName: _EARTH_RADIUS, symObjAddr: 0x8C0, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0x5846, offset: 0x5846, size: 0x8, addend: 0x0, symName: __ZL2PI, symObjAddr: 0x8B0, symBinAddr: 0x100003A28, symSize: 0x0 }
+  - { offsetInCU: 0x59F2, offset: 0x59F2, size: 0x8, addend: 0x0, symName: __Z23getSphericalCoordinatesN7R3Graph8R3VectorERdS1_, symObjAddr: 0x7C8, symBinAddr: 0x10000343C, symSize: 0xE0 }
+  - { offsetInCU: 0x5A30, offset: 0x5A30, size: 0x8, addend: 0x0, symName: __Z9map2earthddddRdS_, symObjAddr: 0x654, symBinAddr: 0x1000032C8, symSize: 0x174 }
+  - { offsetInCU: 0x5B35, offset: 0x5B35, size: 0x8, addend: 0x0, symName: __Z12radiusVectordd, symObjAddr: 0x588, symBinAddr: 0x1000031FC, symSize: 0xCC }
+  - { offsetInCU: 0x5B88, offset: 0x5B88, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x440, symBinAddr: 0x1000030B4, symSize: 0x148 }
+  - { offsetInCU: 0x5C02, offset: 0x5C02, size: 0x8, addend: 0x0, symName: __ZNK7R3Graph7R3PointmiERKS0_, symObjAddr: 0x3C8, symBinAddr: 0x10000303C, symSize: 0x78 }
+  - { offsetInCU: 0x5C3A, offset: 0x5C3A, size: 0x8, addend: 0x0, symName: __ZNK7R3Graph7R3PointplERKNS_8R3VectorE, symObjAddr: 0x350, symBinAddr: 0x100002FC4, symSize: 0x78 }
+  - { offsetInCU: 0x5CC7, offset: 0x5CC7, size: 0x8, addend: 0x0, symName: __ZN7R3Graph7R3PointC1Eddd, symObjAddr: 0x30C, symBinAddr: 0x100002F80, symSize: 0x44 }
+  - { offsetInCU: 0x5CED, offset: 0x5CED, size: 0x8, addend: 0x0, symName: __ZNK7R3Graph8R3Vector13vectorProductERKS0_, symObjAddr: 0x248, symBinAddr: 0x100002EBC, symSize: 0xC4 }
+  - { offsetInCU: 0x5D24, offset: 0x5D24, size: 0x8, addend: 0x0, symName: __ZN7R3Graph8R3VectormLEd, symObjAddr: 0x1E8, symBinAddr: 0x100002E5C, symSize: 0x60 }
+  - { offsetInCU: 0x5D5B, offset: 0x5D5B, size: 0x8, addend: 0x0, symName: __ZNK7R3Graph8R3VectormlEd, symObjAddr: 0x17C, symBinAddr: 0x100002DF0, symSize: 0x6C }
+  - { offsetInCU: 0x5D92, offset: 0x5D92, size: 0x8, addend: 0x0, symName: __ZN7R3Graph8R3Vector9normalizeEv, symObjAddr: 0xF4, symBinAddr: 0x100002D68, symSize: 0x88 }
+  - { offsetInCU: 0x5DC9, offset: 0x5DC9, size: 0x8, addend: 0x0, symName: __ZNK7R3Graph8R3Vector6lengthEv, symObjAddr: 0x8C, symBinAddr: 0x100002D00, symSize: 0x68 }
+  - { offsetInCU: 0x5E44, offset: 0x5E44, size: 0x8, addend: 0x0, symName: __ZN7R3Graph8R3VectorC1Eddd, symObjAddr: 0x48, symBinAddr: 0x100002CBC, symSize: 0x44 }
+  - { offsetInCU: 0x5EA7, offset: 0x5EA7, size: 0x8, addend: 0x0, symName: __ZN7R3Graph8R3VectorC1ERKS0_, symObjAddr: 0x0, symBinAddr: 0x100002C74, symSize: 0x48 }
+  - { offsetInCU: 0x3B93, offset: 0x9A44, size: 0x8, addend: 0x0, symName: __ZStL8__ioinit, symObjAddr: 0x29B70, symBinAddr: 0x100008009, symSize: 0x0 }
+  - { offsetInCU: 0x3D76, offset: 0x9C27, size: 0x8, addend: 0x0, symName: __ZN7R3Graph21intersectPlaneAndLineERKNS_7R3PointERKNS_8R3VectorES2_S5_RS0_, symObjAddr: 0x600, symBinAddr: 0x1000037D4, symSize: 0xC8 }
+  - { offsetInCU: 0x3DFC, offset: 0x9CAD, size: 0x8, addend: 0x0, symName: __ZN7R3Graph15intersectPlanesERKNS_7R3PointERKNS_8R3VectorES2_S5_RS0_RS3_, symObjAddr: 0x4C0, symBinAddr: 0x100003694, symSize: 0x140 }
+  - { offsetInCU: 0x3EA6, offset: 0x9D57, size: 0x8, addend: 0x0, symName: __ZN7R3Graph7R3PointaSERKS0_, symObjAddr: 0x388, symBinAddr: 0x10000364C, symSize: 0x48 }
+  - { offsetInCU: 0x3EDE, offset: 0x9D8F, size: 0x8, addend: 0x0, symName: __ZNK7R3Graph8R3Vector4areaERKS0_, symObjAddr: 0x308, symBinAddr: 0x100003610, symSize: 0x3C }
+  - { offsetInCU: 0x3F24, offset: 0x9DD5, size: 0x8, addend: 0x0, symName: __ZNK7R3Graph8R3Vector13scalarProductERKS0_, symObjAddr: 0x17C, symBinAddr: 0x1000035B4, symSize: 0x5C }
+  - { offsetInCU: 0x3F5B, offset: 0x9E0C, size: 0x8, addend: 0x0, symName: __ZN7R3Graph8R3VectoraSERKS0_, symObjAddr: 0x44, symBinAddr: 0x10000356C, symSize: 0x48 }
+...
