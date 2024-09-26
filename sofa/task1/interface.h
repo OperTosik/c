@@ -1,6 +1,6 @@
 #ifndef TASK
 #define TASK
-#include "task1.h"
+#include "task2.h"
 
 int func(void);
 

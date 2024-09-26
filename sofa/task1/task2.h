@@ -1,5 +1,5 @@
-#ifndef TASK1
-#define TASK1
+#ifndef TASK2
+#define TASK2
 
 #include <iostream>
 #include <cstdlib>
@@ -8,13 +8,11 @@
 #include <cstring>
 #include <string>
 
-// #define N 100
 
 
 class CIntN
 {
     private:
-        // char arr[N] {};
         int n;
         char *arr;
     public:
@@ -29,6 +27,7 @@ class CIntN
         CIntN operator-(const CIntN &) const;
         CIntN neg(void) const;
         char* print () const;
+        // void CIntN::print() const;
 
         CIntN get(bool, int);
         int getN(void) const;

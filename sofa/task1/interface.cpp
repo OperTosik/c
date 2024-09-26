@@ -53,7 +53,7 @@ int func(void) {
                 return 0;       
 		    }
 
-			cout << "\nEnter length of string:\n" << endl;
+			cout << "\nEnter length of string without sign:\n" << endl;
 			int n;
 			cin >> n;
 			if (n <= 0) {
@@ -62,47 +62,66 @@ int func(void) {
 			}
 
 			num1.get(sgn_d1, n);
+
 		} else {
 			cout << "\nEnter first number:\n" << endl;
 			char* array;
 			int k = 0;
 			char c;
-			cin >> c;
-			if (c != '\n') {
+			cin >> c; //холостой ввод, для открытия входного потока, иначе не будет работать cin.get(c) : 93
+			// std::cout << "Read symbol: |" << c << "|" << std::endl; //del
+			if (c != 0 && c != -1 && c != '\n') {
 				k++;
-				array = new char[k];
+				array = new char[1];
+				array[0] = c;
 			}
-			while (c != '\n') {
-				k++;
-				char *tmp = array;
+/////////////////////////////////////////////////////////////////////////
+			while (c != 0 && c != -1 && c != '\n') {
+				k++; //количество разрядов числа (в конечном счете)
+				char *tmp = new char [k - 1];
+				for(int i = 0; i < k-1; i++){
+					tmp[i] = array[i];
+					// cout << "copy tmp to array: " << tmp[i] << endl; //del
+				}
 				delete[] array;
 				array = new char[k];
 				for (int i = 0; i < k-1; i++) {
 					array[i] = tmp[i];
 				}
+				cin.get(c);
 				array[k-1] = c;
 				delete[] tmp;
 				tmp = nullptr;
+				// std::cout << "Read symbol: |" << c << "|" << std::endl; //del
 			}
 
-			char *tmp = array;
-			delete[] array;
-			array = new char[k+1];
-			for (int i = 0; i < k; i++) {
-				array[i] =tmp[i];
+			char *tmp = new char [k - 1];
+			for(int i = 0; i < k-1; i++){
+				tmp[i] = array[i];
+				// cout << "elem tmp: " << array[i] << endl; //del
 			}
-			array[k] = '\0';
+			delete[] array;
+			array = new char[k - 1];
+			// array[k-1] = '\0';
+			for (int i = 0; i < k-1; i++) {
+				array[i] = tmp[i];
+			}
 			if (array[0] == '+' || array[0] == '-') {
-				k--;
+				--k;
 			}
 
 			delete[] tmp;
 
-			CIntN p(k, array);
+			// cout << k  - 1<< "\t" << strlen(array) << endl; //del
+
+			CIntN p(k - 1, array);
 			delete[] array;
 			num1 = p;
+			char* myStr = num1.print(); //del
+			cout << "Check num1: " << myStr << endl; //del
+			delete[] myStr; //del;
 		}
-
+//////////////////////////////////////////////////////////////////////////////////////
 		if (flag_d2) {
 			cout << "\nChoose sign of number:1\n1)Positive      2)Negative\n" << endl;
 			cin >> sgn_data2;
@@ -115,7 +134,7 @@ int func(void) {
                 return 0;       
 		    }
 
-			cout << "\nEnter length of string:\n" << endl;
+			cout << "\nEnter length of string without sign:\n" << endl;
 			int n;
 			cin >> n;
 			if (n <= 0) {
@@ -129,47 +148,65 @@ int func(void) {
 			char* array;
 			int k = 0;
 			char c;
-			cin >> c;
-			if (c != '\n') {
+			cin >> c; //холостой ввод, для открытия входного потока, иначе не будет работать cin.get(c)
+			// std::cout << "Read symbol: |" << c << "|" << std::endl; //del
+			if (c != 0 && c != -1 && c != '\n') {
 				k++;
-				array = new char[k];
+				array = new char[1];
+				array[0] = c;
 			}
-			while (c != '\n') {
-				k++;
-				char *tmp = array;
+/////////////////////////////////////////////////////////////////////////
+			while (c != 0 && c != -1 && c != '\n') {
+				k++; //количество разрядов числа (в конечном счете)
+				char *tmp = new char [k - 1];
+				for(int i = 0; i < k-1; i++){
+					tmp[i] = array[i];
+					// cout << "copy tmp to array: " << tmp[i] << endl; //del
+				}
 				delete[] array;
 				array = new char[k];
 				for (int i = 0; i < k-1; i++) {
-					array[i] =tmp[i];
+					array[i] = tmp[i];
 				}
+				cin.get(c);
 				array[k-1] = c;
 				delete[] tmp;
 				tmp = nullptr;
+				// std::cout << "Read symbol: |" << c << "|" << std::endl; //del
 			}
 
-			char *tmp = array;
-			delete[] array;
-			array = new char[k+1];
-			for (int i = 0; i < k; i++) {
-				array[i] =tmp[i];
+			char *tmp = new char [k - 1];
+			for(int i = 0; i < k-1; i++){
+				tmp[i] = array[i];
+				// cout << "elem tmp: " << array[i] << endl; //del
 			}
-			array[k] = '\0';
+			delete[] array;
+			array = new char[k - 1];
+			// array[k-1] = '\0';
+			for (int i = 0; i < k-1; i++) {
+				array[i] = tmp[i];
+			}
 			if (array[0] == '+' || array[0] == '-') {
 				k--;
 			}
 
 			delete[] tmp;
 
-			CIntN p(k, array);
+			// cout << k  - 1<< "\t" << strlen(array) << endl; //del
+
+			CIntN p(k - 1, array);
 			delete[] array;
-			num1 = p;
+			num2 = p;
+			char* myStr = num2.print(); //del
+			cout << "Check num2: " <<  myStr << endl; //del
+			delete[] myStr;
 		}
 
 		char *tmp = num1.print();
-		cout << tmp << (flag_a ? "+" : "-");
+		cout << "(" <<  tmp << ")" <<  (flag_a ? "+" : "-");
 		delete[] tmp;
 		tmp = num2.print();
-		cout << tmp << "=";
+		cout << "(" << tmp << ")" << "=";
 	       	delete[] tmp;
 		tmp = (flag_a ? num1+num2 : num1-num2).print();
 		cout << tmp << endl;
