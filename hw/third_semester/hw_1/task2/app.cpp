@@ -11,7 +11,7 @@ void map2earth(
 );
 
 void getSphericalCoordinates(
-    R3Graph::R3Vector vector,
+    const R3Graph::R3Vector& vector,
     double& lat, double& lon
 );
 
@@ -71,11 +71,13 @@ void map2earth(
 }
 
 void getSphericalCoordinates(
-    R3Graph::R3Vector vector,
+    const R3Graph::R3Vector& vector,
     double& lat, double& lon
 ) {
-    double theta = atan(sqrt(vector.x * vector.x + vector.y * vector.y) / vector.z);
-    double phi = atan(vector.y / vector.x);
+    // double theta = atan2(sqrt(vector.x * vector.x + vector.y * vector.y), vector.z);
+    double theta = PI/2. - R3Graph::R3Vector(0., 0., 1.).angle(vector);
+
+    double phi = atan2(vector.y, vector.x);
     lat = theta * 180. / PI;
     lon = phi * 180. / PI;
 }

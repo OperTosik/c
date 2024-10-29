@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <malloc.h>
+// #include <malloc.h>
 
 void f(const int *array, int len, int *k, int*s);
 
@@ -37,7 +37,7 @@ int main(void) {
     if (k != -1) fprintf(fout, "%d %d\n", k, s);
     else fprintf(fout, "-1\n");
     fclose(fout);
-    free(array);
+    //free(array);
     return 0;
 }
 

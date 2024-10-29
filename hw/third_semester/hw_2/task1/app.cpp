@@ -1,113 +1,232 @@
 #include "complex.h"
 
 bool interface(
-    ComplexNumber::Complex& a,
-    ComplexNumber::Complex& b,
-    ComplexNumber::Complex& c,
-    ComplexNumber::Complex& d
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&
 );
-void cardanoMethod(double a, double b, double c, double d);
-void moveCoeff(double& a, double& b, double& c, double& d);
-void xNotEqualNull(double& a, double& b);
+void cardanoMethod(
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&
+);
+void moveCoeff(
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&
+);
+void bNotEqualNull(
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&
+);
+
+void hornerMethod(
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&
+);
+
+void equation2(
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&,
+    ComplexNumber::ComplexExp&
+);
+
+bool test(
+    const ComplexNumber::ComplexExp&,
+    const ComplexNumber::ComplexExp&,
+    const ComplexNumber::ComplexExp&,
+    const ComplexNumber::ComplexExp&,
+    const ComplexNumber::ComplexExp&
+);
 
 int main() {
     while (true) {
-        double real, image;
-        ComplexNumber::Complex a, b, c, d;
+        ComplexNumber::ComplexExp a, b, c, d;
+        ComplexNumber::ComplexExp x1, x2, x3;
+
+        if (interface(a, b, c, d)) {
+            std::cout << "exit" << std::endl;
+            return 0;
+        }
+
+        //test
+            ComplexNumber::ComplexExp k = a;
+            ComplexNumber::ComplexExp l = b;
+            ComplexNumber::ComplexExp m = c;
+            ComplexNumber::ComplexExp n = d;
+        //
         
+        cardanoMethod(a, b, c, d, x1, x2, x3);
         
-        if (!std::cin) break;
-        cardanoMethod(a, b, c, d);
+        std::cout << "Solution: " << std::endl;
+        std::cout << "x1 = " << x1 << std::endl;
+        std::cout << "x2 = " << x2 << std::endl;
+        std::cout << "x3 = " << x3 << std::endl;
         
+        //test
+            std::cout << std::endl;
+            std::cout << "Check answer of correction" << std::endl;
+            if (test(k, l, m, n, x1)) {
+                std::cout << "x1 is TRUE root of equation" << std::endl;
+            }
+            else {
+                std::cout << "x1 is FALSE root of equation" << std::endl;
+            }
+            if (test(k, l, m, n, x2)) {
+                std::cout << "x2 is TRUE root of equation" << std::endl;
+            }
+            else {
+                std::cout << "x1 is FALSE root of equation" << std::endl;
+            }
+            if (test(k, l, m, n, x3)) {
+                std::cout << "x3 is TRUE root of equation" << std::endl;
+            }
+            else {
+                std::cout << "x1 is FALSE root of equation" << std::endl;
+            }
+        //
+        std::cout << std::endl;
     }
 }
 
 bool interface(
-    ComplexNumber::Complex& a,
-    ComplexNumber::Complex& b,
-    ComplexNumber::Complex& c,
-    ComplexNumber::Complex& d
-) {
-    int active;
-    double x, y;
-    std::cout << "Choose form for complex number:" << std::endl;
-    std::cout << "1 - algebraic form\t 2 - exponencial form" << std::endl;
-    std::cin >> active;
-    if (active == 1) {
-        std::cout << "Enter complex coefficients of cubic equation: " << std::endl;
-        std::cout << "a: "; 
-        std::cin >> x >> y;
-        a = ComplexNumber::Complex(x, y);
-        std::cout << "b: "; 
-        std::cin >> x >> y;
-        b = ComplexNumber::Complex(x, y);
-        std::cout << "c: "; 
-        std::cin >> x >> y;
-        c = ComplexNumber::Complex(x, y);
-        std::cout << "d: "; 
-        std::cin >> x >> y;
-        d = ComplexNumber::Complex(x, y);
-    }
-    else if (active == 2) {
-        std::cout << "Enter complex coefficients of cubic equation: " << std::endl;
-        std::cout << "a: "; 
-        std::cin >> x >> y;
-        a = ComplexNumber::ComplexExp(x, y);
-        std::cout << "b: "; 
-        std::cin >> x >> y;
-        b = ComplexNumber::Complex(x, y);
-        std::cout << "c: "; 
-        std::cin >> x >> y;
-        c = ComplexNumber::Complex(x, y);
-        std::cout << "d: "; 
-        std::cin >> x >> y;
-        d = ComplexNumber::Complex(x, y);
-    }
-    else {
-        std::cout << "Exit" << std::endl;
-        return false;
-    }
+    ComplexNumber::ComplexExp& a,
+    ComplexNumber::ComplexExp& b,
+    ComplexNumber::ComplexExp& c,
+    ComplexNumber::ComplexExp& d
+) {    
+    std::cout << "Enter complex coefficients of cubic equation in format: len angle" << std::endl;
+    std::cout << "a: ";
+    std::cin >> a;
+    std::cout << "b: "; 
+    std::cin >> b;
+    std::cout << "c: "; 
+    std::cin >> c;
+    std::cout << "d: "; 
+    std::cin >> d;
+    std::cout << std::endl;
+    if (!std::cin) return true;
+    return false;
 }
 
-void cardanoMethod(double a, double b, double c, double d){}
+void cardanoMethod(
+    ComplexNumber::ComplexExp& a,
+    ComplexNumber::ComplexExp& b,
+    ComplexNumber::ComplexExp& c,
+    ComplexNumber::ComplexExp& d,
+    ComplexNumber::ComplexExp& x1,
+    ComplexNumber::ComplexExp& x2,
+    ComplexNumber::ComplexExp& x3
+) {
+    ComplexNumber::ComplexExp s = (-b) / (3.*a);
+    moveCoeff(a, b, c, d); // x^3 + ax + b = 0
+    
+    if (fabs(b.real()) < EPSILON && fabs(b.image()) < EPSILON) {
+        x1 = ComplexNumber::ComplexExp();
+        x2 = (-a).power(0.5);
+        x3 = -x2;
 
-void moveCoeff(double& a, double& b, double& c, double& d){
-    double s = -b / (3.*a);
-    d = (a*s*s*s + b*s*s + c*s + d) / a;
-    c = (3.*a*s*s + 2.*b*s + c) / a;
+        x1 += s;
+        x2 += s;
+        x3 += s;
+
+        return;
+    } 
+
+    bNotEqualNull(a, b, x1);
+    
+    c = ComplexNumber::ComplexExp(1., 0.);
+    d = ComplexNumber::ComplexExp();
+    hornerMethod(c, d, a, b, x1); //x^3 + ax + b = 0
+
+    equation2(c, d, a, x2, x3);
+    x1 += s;
+    x2 += s;
+    x3 += s;
+
+}
+
+void moveCoeff(
+    ComplexNumber::ComplexExp& a,
+    ComplexNumber::ComplexExp& b,
+    ComplexNumber::ComplexExp& c,
+    ComplexNumber::ComplexExp& d
+) {
+    // ComplexNumber::ComplexExp s = (-1.*b) / (3.*a);
+    d = (d/a) - ((b*b*b) / (27.*a*a*a)) + ((b*b*b) / (9.*a*a*a)) - ((b*c) / (3.*a));
+    c = (c/a) + ((b*b) / (3.*a*a)) - ((2.*b*b) / (3.*a*a));
     b = d;
     a = c;
     
 }
 
-void xNotEqualNull(double& a, double& b) {
-    bool sign = true;
-    double discriminant = 81.*b*b + 12.*a*a*a; // discr^2
+void bNotEqualNull(
+    ComplexNumber::ComplexExp& a,
+    ComplexNumber::ComplexExp& b,
+    ComplexNumber::ComplexExp& x
+) {
+    ComplexNumber::ComplexExp discriminant = (81.*b*b) + (12.*a*a*a); // discr^2
+    discriminant.power(0.5);
 
-    if (discriminant - EPSILON < 0) {
-        sign = false;
+    if (fabs(discriminant.real()) < EPSILON && fabs(discriminant.image()) < EPSILON) {
+        discriminant = ComplexNumber::ComplexExp();
     }
 
-    discriminant = sqrt(fabs(discriminant)); // possitive number under root (unsigned)
+    ComplexNumber::ComplexExp u = ((-9.*b + discriminant) / 18.).power(1/3);
+    ComplexNumber::ComplexExp v = (-a) / (3*u);
+    x = u + v;
+}
 
-    if (discriminant < EPSILON) {
-        discriminant = 0.;
-    }
+void hornerMethod(
+    ComplexNumber::ComplexExp& a,
+    ComplexNumber::ComplexExp& b,
+    ComplexNumber::ComplexExp& c,
+    ComplexNumber::ComplexExp& d,
+    ComplexNumber::ComplexExp& x
+) {
+    b += x * a;
+    c += x * b;
+    d += x * c;
 
-    ComplexNumber::ComplexExp uExp;
-    
-    if (sign) {
-        uExp.algToExp(ComplexNumber::Complex((-9.*b + discriminant) / 18., 0.));
-    }
-    else {
-        uExp.algToExp(ComplexNumber::Complex((-9.*b) / 18., discriminant / 18.));
-    }
+    // if (fabs(d.real()) >= EPSILON || fabs(d.image()) >= EPSILON) {
+    //     std::cout << x << " is not solution" << std::endl;
+    // }
+}
 
-    uExp.power(1/3);
-    ComplexNumber::Complex uAlg;
-    uAlg.expToAlg(uExp);
-    ComplexNumber::Complex v = ComplexNumber::Complex(-a, 0.) / (uAlg*3.); // mb error
-    v += uAlg; // first value x
-    
-    
+void equation2(
+    ComplexNumber::ComplexExp& a,
+    ComplexNumber::ComplexExp& b,
+    ComplexNumber::ComplexExp& c,
+    ComplexNumber::ComplexExp& x,
+    ComplexNumber::ComplexExp& y
+) {
+    ComplexNumber::ComplexExp discriminant = (b*b - 4.*a*c).power(1/2);
+    x = (-b + discriminant) / (2.*a);
+    y = (-b - discriminant) / (2.*a);
+}
+
+bool test(
+    const ComplexNumber::ComplexExp& a,
+    const ComplexNumber::ComplexExp& b,
+    const ComplexNumber::ComplexExp& c,
+    const ComplexNumber::ComplexExp& d,
+    const ComplexNumber::ComplexExp& x
+) {
+    ComplexNumber::ComplexExp res = a*x*x*x + b*x*x + c*x + d;
+    if (fabs(res.real()) < EPSILON && fabs(res.image()) < EPSILON) {
+        return true;
+    }
+    return false;
 }
