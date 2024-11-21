@@ -1,0 +1,3 @@
+Stack calculator                              ‰   ‰StackCalc.cpp
+Stack of real numbers, interface              ‰   ‰RealStack.h
+    Implementation                            ‰   ‰RealStack.cpp

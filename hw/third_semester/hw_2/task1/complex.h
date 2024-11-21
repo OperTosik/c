@@ -178,6 +178,10 @@ namespace ComplexNumber{
                 len = 0.;
                 theta = 0.;
             }
+            if (len < -EPSILON) {
+                len = fabs(len);
+                theta += PI;
+            }
         }
 
         double real() const {
