@@ -1,4 +1,4 @@
-CC = g++-14 $(CFLAGS)
+CC = g++ $(CFLAGS)
 CFLAGS = -g -O0 -std=c++14
 
 StackCalc: StackCalc.o RealStack.o
