@@ -23,7 +23,7 @@ TreeNode* findElem(TreeNode* root, TreeNode* node) {
 /** Нахождение общего родителя вершин со значениями a и b (родитель ближайший к вершинам) */
 TreeNode* findCommonParent(TreeNode* root, TreeNode* a, TreeNode* b) {
     TreeNode* tmp1 = findElem(root->left, a);
-    TreeNode* tmp2 = findElem(root->left, b);
+    TreeNode* tmp2 = findElem(root->left, b); 
     if (tmp1 != nullptr && tmp2 != nullptr) {
         return findCommonParent(root->left, a, b);
     }
