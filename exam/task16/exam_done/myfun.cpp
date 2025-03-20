@@ -3,15 +3,95 @@
  */
 #include "tree.h"
 #include <map>
+#include <cassert>
 
-/** Нахождение вершины по значению value */
-TreeNode* findElem(TreeNode* root, int value) {
-    if (root == nullptr) return nullptr;
-    if (value == root->value) return root;
-    findElem(root->left, value);
-    findElem(root->right, value);
-    return nullptr;
+TreeNode* findNode(
+    TreeNode* t,
+    int value
+) {
+    if(t == nullptr)
+        return nullptr;
+    if(t -> value == value)
+        return t;
+    TreeNode* res = nullptr;
+    if(t -> left != nullptr) {
+        res = findNode(t -> left, value);
+        if(res != nullptr)
+            return res;
+    }
+    if(t -> right != nullptr) {
+        res = findNode(t -> right, value);
+        if(res != nullptr)
+            return res;
+    }
+    return res;
 }
+
+void removeLeftSubtree(
+    TreeNode* t
+) {
+    assert(t != nullptr);
+    if(t -> left == nullptr)
+        return;
+    if(t -> left -> left == nullptr && t -> left -> right == nullptr) { 
+        delete t -> left;
+    } else {
+        removeLeftSubtree(t -> left);
+        removeRightSubtree(t -> left);
+        delete t -> left;
+    } 
+    t -> left = nullptr;
+}
+
+void removeRightSubtree(
+    TreeNode* t
+) {
+    assert(t != nullptr);
+    if(t -> right == nullptr)
+        return;
+    if(t -> right -> left == nullptr && t -> right -> right == nullptr) { 
+        delete t -> right;
+    } else {
+        removeLeftSubtree(t -> right);
+        removeRightSubtree(t -> right);
+        delete t -> right;
+    } 
+    t -> right = nullptr;
+}
+
+bool isLeaf(const TreeNode* t) {
+    return (t->left == nullptr && t->right == nullptr);
+}
+
+void makeSubtreesEqual(
+    TreeNode* t1,
+    TreeNode* t2
+) {
+    assert(t1 != nullptr && t2 != nullptr);
+    if(isLeaf(t1)) {
+        removeLeftSubtree(t2);
+        removeRightSubtree(t2);
+        return;
+    }
+    if(isLeaf(t2)) {
+        removeLeftSubtree(t1);
+        removeRightSubtree(t1);
+        return;
+    }
+    if(t1 -> left == nullptr) {
+        removeLeftSubtree(t2);
+    } else if(t2 -> left == nullptr) {
+        removeLeftSubtree(t1);
+    } else makeSubtreesEqual(t1 -> left, t2 -> left);
+    
+    if(t1 -> right == nullptr) {
+        removeRightSubtree(t2);
+    } else if(t2 -> right == nullptr) {
+        removeRightSubtree(t1);
+    } else makeSubtreesEqual(t1 -> right, t2 -> right);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 /** Нахождение  вершины по заданной вершине */
 TreeNode* findElem(TreeNode* root, TreeNode* node) {
@@ -40,76 +120,7 @@ TreeNode* findCommonParent(TreeNode* root, TreeNode* a, TreeNode* b) {
     return root;
 }
 
-/** Удаление поддерева, начиная с заданной вершины */
-void deleteNode(TreeNode* root) {
-    if (root == nullptr) return;
-    deleteNode(root->left);
-    deleteNode(root->right);
-    root = nullptr; 
-}
-
-/** Оставлялет ветвь от корня до родителя, остальные удаляет*/
-void saveParent(TreeNode* root, TreeNode* parent) {
-    if (root == nullptr) return;
-    if (root == parent) return;
-    if (findElem(root->left, parent) == nullptr) {
-        deleteNode(root->left);
-        saveParent(root->right, parent);
-    }
-    if (findElem(root->right, parent) == nullptr) {
-        deleteNode(root->right);
-        saveParent(root->left, parent);
-    }
-}
-
-void walkWithDelete(TreeNode* root, TreeNode* a, TreeNode* b) {
-    if (root == nullptr) return;
-    TreeNode* tmp1 = findElem(root->left, a);
-    TreeNode* tmp2 = findElem(root->left, b);
-    if (tmp1 == nullptr && tmp2 == nullptr) {
-        deleteNode(root->left);
-        walkWithDelete(root->right, a, b);
-    }
-    tmp1 = findElem(root->right, a);
-    tmp2 = findElem(root->right, b);
-    if (tmp1 == nullptr && tmp2 == nullptr) {
-        deleteNode(root->right);
-        walkWithDelete(root->left, a, b);
-    }
-}
-
-/** Начиная с родителя, удаляет все ветви не содержащие вершину a или вершину b */
-void saveNodesWithParents(TreeNode* root, TreeNode* a, TreeNode* b, TreeNode* parent) {
-    if (root == nullptr) return;
-    if (parent == root) {
-        walkWithDelete(root->left, a, b);
-        walkWithDelete(root->right, a, b);
-        return;
-    }
-    findElem(root->left, parent);
-    findElem(root->right, parent);
-}
-
-/** Оставляет ветви от корня до вершин a и b
- * хз, надо переписать
- */
-void saveOnlyNodes(TreeNode* root, TreeNode* a, TreeNode* b) {
-    if (root == nullptr) return;
-    TreeNode* tmp1 = findElem(root->left, a);
-    TreeNode* tmp2 = findElem(root->left, b);
-    if (tmp1 == nullptr && tmp2 == nullptr) {
-        deleteNode(root->left);
-        saveOnlyNodes(root->right, a, b);
-    }
-    tmp1 = findElem(root->right, a);
-    tmp2 = findElem(root->right, b);
-    if (tmp1 == nullptr && tmp2 == nullptr) {
-        deleteNode(root->right);
-        saveOnlyNodes(root->left, a, b);
-    }
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 /** Вставить в tmain.cpp
  *  std::map<TreeNode*, int> array;
@@ -159,7 +170,7 @@ std::map<TreeNode*, int> maximumPairs(std::map<TreeNode*, int> array) {
     return res;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 /** Задача 4 */
 /** Возвращает концевой узел самой длинной ветки
@@ -188,8 +199,11 @@ void findLongestBranch(TreeNode* root, TreeNode* node) {
 /** Удаляет концевой узел самой длиной ветви */
 void deleteTerminalNode(TreeNode* root, TreeNode* node) {
     if (root == nullptr) return;
-    if (root == node && root->left == nullptr && root->right == nullptr) {
-        root = nullptr;
+    if (root->left == node) {
+        removeLeftSubtree(root);
+    }
+    if (root->right == node) {
+        removeRightSubtree(root);
     }
     deleteTerminalNode(root->left, node);
     deleteTerminalNode(root->right, node);
@@ -223,5 +237,3 @@ void insertTerminalNode(TreeNode* root, TreeNode* node) {
     insertTerminalNode(root->left, node);
     insertTerminalNode(root->right, node);
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////

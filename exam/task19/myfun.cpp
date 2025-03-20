@@ -23,7 +23,7 @@ TreeNode* findElem(TreeNode* root, TreeNode* node) {
 /** Нахождение общего родителя вершин со значениями a и b (родитель ближайший к вершинам) */
 TreeNode* findCommonParent(TreeNode* root, TreeNode* a, TreeNode* b) {
     TreeNode* tmp1 = findElem(root->left, a);
-    TreeNode* tmp2 = findElem(root->left, b); 
+    TreeNode* tmp2 = findElem(root->left, b);
     if (tmp1 != nullptr && tmp2 != nullptr) {
         return findCommonParent(root->left, a, b);
     }
@@ -61,13 +61,18 @@ void walkWithDelete(TreeNode* root, TreeNode* a, TreeNode* b) {
     if (root == nullptr) return;
     TreeNode* tmp1 = findElem(root->left, a);
     TreeNode* tmp2 = findElem(root->left, b);
-    if (tmp1 != nullptr)
+    if (tmp1 == nullptr && tmp2 == nullptr) {
+        deleteNode(root->left);
+        walkWithDelete(root->right, a, b);
+    }
     tmp1 = findElem(root->right, a);
     tmp2 = findElem(root->right, b);
     if (tmp1 == nullptr && tmp2 == nullptr) {
         deleteNode(root->right);
         walkWithDelete(root->left, a, b);
     }
+    walkWithDelete(root->left, a, b);
+    walkWithDelete(root->right, a, b);
 }
 
 /** Начиная с родителя, удаляет все ветви не содержащие вершину a или вершину b 
