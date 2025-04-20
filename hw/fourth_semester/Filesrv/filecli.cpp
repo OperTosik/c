@@ -323,27 +323,103 @@ static void cd(int s, const char* path) {
     }
 }
 
-static void ls(int /* s */) {
+static void ls(int s) {
     // To do...
     //... printf("Not implemented.\n");
     //... longjmp(readCommandPoint, 0);
-    throw ProtocolException("Not implemented");
+    // throw ProtocolException("Not implemented");
+
+    ProtocolFrame frame;
+    initializeFrame(&frame);
+    frame.command = FSR_LS;
+    frame.length = 0;
+    sendFrame(s, &frame);
+    if (receiveFrame(s, &frame) < 0) {
+        printf("Disconnected.\n");
+        exit(1);
+    }
+    if (frame.command == FSR_DATAEND) {
+        char path[PATH_MAX + 1];
+        int len = frame.length;
+        if (len > PATH_MAX)
+            len = PATH_MAX;
+        memmove(path, frame.data, len);
+        path[len] = 0;
+        printf("%s\n", path);
+    } else if (frame.command == FSR_ERROR) {
+        printf("Error: %s\n", frame.data);
+    } else {
+        printf("Incorrect protocol.\n");
+        exit(1);
+    }
 
 }
 
-static void put(int /* s */, const char* /* path */) {
+static void put(int s, const char* path) {
     // To do...
     //... printf("Not implemented.\n");
     //... longjmp(readCommandPoint, 0);
-    throw ProtocolException("Not implemented");
+    // throw ProtocolException("Not implemented");
+
+    ProtocolFrame frame;
+    initializeFrame(&frame);
+    frame.command = FSR_PUT;
+    int len = strlen(path);
+    sendFrame(s, &frame);
+
+    if (len >= FSR_MAXDATALEN)
+        len = FSR_MAXDATALEN - 1;
+    frame.length = len + 1;
+    memmove(frame.data, path, len);
+    frame.data[len] = 0;
+    sendFrame(s, &frame);
+
+    if (receiveFrame(s, &frame) < 0) {
+        printf("Disconnected.\n");
+        exit(1);
+    }
+    if (frame.command == FSR_SUCCESS) {
+        printf("OK\n");
+    } else if (frame.command == FSR_ERROR) {
+        printf("Error: %s\n", frame.data);
+    } else {
+        printf("Incorrect protocol.\n");
+        exit(1);
+    }
 
 }
 
-static void get(int /* s */, const char* /* path */) {
+static void get(int s, const char* path) {
     // To do...
     //... printf("Not implemented.\n");
     //... longjmp(readCommandPoint, 0);
-    throw ProtocolException("Not implemented");
+    // throw ProtocolException("Not implemented");
+
+    ProtocolFrame frame;
+    initializeFrame(&frame);
+    frame.command = FSR_GET;
+    int len = strlen(path);
+    sendFrame(s, &frame);
+
+    if (len >= FSR_MAXDATALEN)
+        len = FSR_MAXDATALEN - 1;
+    frame.length = len + 1;
+    memmove(frame.data, path, len);
+    frame.data[len] = 0;
+    sendFrame(s, &frame);
+
+    if (receiveFrame(s, &frame) < 0) {
+        printf("Disconnected.\n");
+        exit(1);
+    }
+    if (frame.command == FSR_SUCCESS) {
+        printf("OK\n");
+    } else if (frame.command == FSR_ERROR) {
+        printf("Error: %s\n", frame.data);
+    } else {
+        printf("Incorrect protocol.\n");
+        exit(1);
+    }
 
 }
 
