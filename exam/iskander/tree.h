@@ -43,10 +43,6 @@ class  Tree
         //    pos  -  указатель на корень поддерева.
 
         void  T_Print (FILE *f, TreeNode *pos);
-        TreeNode* balance(TreeNode* root);
-        void removeLeftSubtree(TreeNode* t);
-        void removeRightSubtree(TreeNode* t);
-        TreeNode* walkWithDelete(TreeNode* root, int x);
 
        /*  Примечание:
         *     Дерево распечатывается "лежа на левом боку", т.е.

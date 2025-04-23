@@ -44,16 +44,22 @@ int  main(void)
     // сюда следует вставить вызовы Ваших функций
     // для решения поставленной задачи
     
-    TreeNode* balance(tr.root);
-    printf("Balanced Tree: ");
-    T_Print(stdout,tr.root);
-    T_Print(fout,tr.root);
-    int x;
+    //Задача 7 или 19
+    int x, y;
+    TreeNode* a = nullptr;
+    TreeNode* b = nullptr;
+    printf("Enter a: ");
     scanf("%d", &x);
-    walkWithDelete(tr.root, x);
-    T_Print(stdout,tr.root);
-    T_Print(fout,tr.root);
-    
+    printf("\nEnter b: ");
+    scanf("%d", &y);
+
+    if (findElem(tr.root, x) == nullptr || findElem(tr.root, y) == nullptr) {
+        printf("Incorrect input data.\n");
+        return 1;
+    }
+    TreeNode* parent = findCommonParent(tr.root, a, b);
+    saveParent(tr.root, parent);
+    saveNodesWithParents(tr.root, a, b, parent);
 
 
     // закрываем файл результата

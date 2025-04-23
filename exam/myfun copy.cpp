@@ -11,12 +11,11 @@ TreeNode* balance(TreeNode* root) {
     }
     else {
         if (root->left != nullptr) {
-            root->balance += root->left->balance - 1;
+            root->balance += root->left->balance + root->left->value - 1;
         }
         if (root->right != nullptr) {
-            root->balance += root->right->balance - 1;
+            root->balance += root->right->balance + root->right->value - 1;
         }
-        root->balance += root->value;
     }
     balance(root->left);
     balance(root->right);
@@ -57,11 +56,11 @@ void removeRightSubtree(
 
 TreeNode* walkWithDelete(TreeNode* root, int x) {
     if (root == nullptr) return nullptr;
-    if (root->balance == x) {
+    if (root->value == x) {
         removeLeftSubtree(root);
         return root;
     }
-    if (root->balance < x) {
+    if (root->value < x) {
         removeLeftSubtree(root);
         removeRightSubtree(root);
         return root;
