@@ -6,7 +6,9 @@
 
 [Задача 3](https://github.com/OperTosik/c/blob/main/hw/fourth_semester/py/app.py): реализован вариант 1.
 Здесь только один файл скачиваем.
+
 Запуск: python3 app.py
+
 После запуска введите натуральное число.
 
 [Задача 4](https://github.com/OperTosik/c/tree/main/hw/fourth_semester/ml): вариант у всех один.
