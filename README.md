@@ -1,4 +1,4 @@
-ЗАДАЧИ 4 СЕМЕСТРА
+**ЗАДАЧИ 4 СЕМЕСТРА*
 
 [Задача 1](https://github.com/OperTosik/c/tree/main/hw/fourth_semester/Filesrv): реализован вариант 3.
 Скачайте все файлы с директории.
@@ -12,5 +12,3 @@
 [Задача 4](https://github.com/OperTosik/c/tree/main/hw/fourth_semester/ml): вариант у всех один.
 Скачайте оба файла.
 Запуск: python3 leastSquares.py
-[](hw/fourth_semester/py/img.png)
-После запуска переключитесь на Huber
