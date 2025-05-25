@@ -1,3 +1,16 @@
-ДЗ за 3 семестр: hw/third_semester
+ЗАДАЧИ 4 СЕМЕСТРА
 
-Первый номер первого дз (правильное решение): hw/third_semester/seminar/app.cpp
+[Задача 1](https://github.com/OperTosik/c/tree/main/hw/fourth_semester/Filesrv): реализован вариант 3.
+Скачайте все файлы с директории.
+Я не помню, как она запускается.
+
+[Задача 3](https://github.com/OperTosik/c/blob/main/hw/fourth_semester/py/app.py): реализован вариант 1.
+Здесь только один файл скачиваем.
+Запуск: python3 app.py
+После запуска введите натуральное число.
+
+[Задача 4](https://github.com/OperTosik/c/tree/main/hw/fourth_semester/ml): вариант у всех один.
+Скачайте оба файла.
+Запуск: python3 leastSquares.py
+![alt text](/hw/fourth_semester/py/img.png)
+После запуска переключитесь на Huber
