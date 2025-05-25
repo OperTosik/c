@@ -1,9 +1,0 @@
-Simple graphic window                         ‰   ‰gwindow.h
-    Implementation                            ‰   ‰gwindow.cpp
-Crosses / Nulles                              ‰   ‰xo.cpp
-Animation example: Clock                      ‰   ‰clock.cpp
-Very simple test                              ‰   ‰grtst.cpp
-                                              ‰   ‰
-Makefile                                      ‰   ‰Makefile
-R2Graph                                       ‰   ‰../R2Graph/R2Graph.h
-All files                                     ‰   ‰.
