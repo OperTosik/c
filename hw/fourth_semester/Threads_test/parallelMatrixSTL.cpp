@@ -86,10 +86,6 @@ void multiplyMatrixRow(
     int i, double coeff
 );
 
-void reversePass(
-    double *a, int m, int n, 
-    int rank, double eps=1e-12);
-
 int parallelGaussMethod(    // Return a matrix rank
     double *a, int m, int n,
     int numThreads = 4
@@ -112,7 +108,6 @@ const double EPS = 1e-8;
 int main() {
     int m, n;
     double *a = 0;
-    double *inverse = 0;
     
     FILE* f = fopen("input.txt", "rt");
     if (f == NULL) {
@@ -130,11 +125,6 @@ int main() {
     
     printf("Matrix of size %d*%d:\n", m, n);
     writeMatrix(stdout, a, m, n);
-
-    if (n != m) {
-        printf("Incorrect size of matrix");
-        return (-1);
-    }
     
     printf("Enter number of threads: ");
     if (scanf("%d", &numThreads) < 1) 
@@ -148,13 +138,7 @@ int main() {
     */
     auto begin = std::chrono::high_resolution_clock::now();
 
-    // int rank = parallelGaussMethod(a, m, n, numThreads);
-
-    inverse = new double[n*n];
-    inverseMatrix(a, n, inverse);
-    printf("Inverse matrix:\n");
-    writeMatrix(stdout, inverse, n, n);
-    delete[] inverse;
+    int rank = parallelGaussMethod(a, m, n, numThreads);
 
     /*
     gettimeofday(&timeOfDay, NULL);
@@ -170,15 +154,14 @@ int main() {
     auto elapsed =
         std::chrono::duration<double, std::milli>(end - begin);
     
-    // printf("Row echelon form of matrix:\n");
-    // writeMatrix(stdout, a, m, n);
+    printf("Row echelon form of matrix:\n");
+    writeMatrix(stdout, a, m, n);
 
-    // printf("Rank of matrix: %d\n", rank);
-    // if (m == n) {
-    //     printf("Determinant of matrix: %f\n", det(a, m, n));
-    // }
+    printf("Rank of matrix: %d\n", rank);
+    if (m == n) {
+        printf("Determinant of matrix: %f\n", det(a, m, n));
+    }
 
-    
     // printf("Computation time: %.3lf ms\n", timeIntervalInSeconds*1000.);
     printf(
         "Computation time: %.3lf ms\n", 
@@ -336,11 +319,9 @@ int parallelGaussMethod(    // Return a matrix rank
 
         ++i; ++j;
     } // end while
-    // writeMatrix(stdout, a, m, n);
-
     
     releaseThreadPool();
-
+    
     return i;
 }
             
@@ -538,76 +519,4 @@ void multiplyMatrixRow(
     for (int j = 0; j < n; ++j) {
         a[i*n + j] *= coeff;
     }
-}
-
-void reversePass(
-    double *a, int m, int n, 
-    int rank, double eps
-) {
-    assert(rank <= m);
-    int i = rank - 1;
-    while (i >= 0) {
-        int j = 0;
-        while (j < n && fabs(a[i*n + j]) <= eps)
-            ++j;
-        if (j >= n)
-            assert(false);
-        int j0 = j;
-        double r = a[i*n + j0];
-        assert(fabs(r) > eps);
-        while (j < n) {
-            a[i*n + j] /= r;
-            ++j;
-        }
-    
-        for (int k = 0; k < i; ++k) {
-            r = a[k*n + j0];
-            a[k*n + j0] = 0.;
-            for (j = j0 + 1; j < n; ++j) {
-                a[k*n + j] -= a[i*n + j]*r;
-            }
-        }
-
-        --i;
-    }
-}
-
-bool inverseMatrix(
-    const double *a, int n, // matrix n*n
-    double* inverse         // out: inverse matrix
-) {
-    double *tmp = new double[n*2*n];
-
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            tmp[i*2*n + j] = a[i*n + j];
-        }
-        for (int j = n; j < 2*n; ++j) {
-            if (i == j - n) {
-                tmp[i*2*n + j] = 1;
-            }
-            else {
-                tmp[i*2*n + j] = 0;
-            }
-        }
-    }
-
-    // writeMatrix(stdout, tmp, n, 2*n);
-
-    int rank = parallelGaussMethod(tmp, n, 2*n, numThreads);
-
-    // writeMatrix(stdout, tmp, n, 2*n);
-
-    reversePass(tmp, n, 2*n, rank);
-
-    // writeMatrix(stdout, tmp, n, 2*n);
-
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            inverse[i*n + j] = tmp[i*2*n + n + j];
-        }
-    }
-
-    delete[] tmp;
-    return true;
 }
