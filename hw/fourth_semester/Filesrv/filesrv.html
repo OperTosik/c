@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv='Content-Type' content='text/html; charset=koi8-r'>
+<head>
+<title>"File Server" Project
+</title>
+</head>
+<body>
+<pre>
+d`o"i^o"i"e"i`i "i^a'ia^i'a : d`o"ia"e^oa "ae'a^e`i"i:`u^e 'oa`o:a`o"
+
+`oA'A`I'E'U"Ix'A^I D`O"I'O^O"I^E AE'A^E`I"Ix`U^E 'OA`OxA`O, D"I'Ux"I`I~N`A'Y'E^E D`O"I'O'I'A^O`O'Ex'A^OO
+'OD'E'O"I"E AE'A^E`I"Ix x ^OA"E~O'YA^E "A'E`OA"E^O"I`O'E'E, 'E'U'IA^I~N^OO ^OA"E~O'Y~O`A "A'E`OA"E^O"I`O'E`A,
+DA`OA'O`U`I'A^OO AE'A^E`I`U 'OA`OxA`O~O 'E D"I`I~OTh'A^OO AE'A^E`I`U "I^O 'OA`OxA`O'A.
+"a`I~N DA`OA"A'ATh'E "A'A^I^I`U`E 'E'OD"I`IO'U~OA^O'O~N D`O"I^O"I"E"I`I TCP.
+d`O"I^O"I"E"I`I "I^A'IA^I'A D"I'O^O`O"IA^I ^I'A"A D`O"I^O"I"E"I`I"I'I TCP.
+"a'A^I^I`UA DA`OA"A'A`A^O'O~N "E'A"A`O'A'I'E. "e'A"A`O 'O"I"AA`O"O'E^O
+    1) "E"I'I'A^I"A~O, "E"I^O"I`O'A~N D`OA"A'O^O'Ax`I~NA^O'O~N ~AA`I`U'I Th'E'O`I"I'I (4 ^A'A^E^O'A);
+    2) "A`I'E^I~O D"I`I~N "A'A^I^I`U`E (~AA`I"IA Th'E'O`I"I, 4 ^A'A^E^O'A);
+    3) "A'A^I^I`UA -- 'I'A'O'O'Ex "U`IA'IA^I^O"Ix ^O'ED'A char DA`OA'IA^I^I"I^E "A`I'E^I`U.
+
+"a`I'E^I'A D"I`I~N "A'A^I^I`U`E 'I"I"OA^O ^A`U^OO `O'Ax^I'A ^I~O`I`A 'E ^IA 'I"I"OA^O D`OAx`U^U'A^OO 
+"E"I^I'O^O'A^I^O`U
+
+    const int FSR_MAXDATALEN = 2048;
+
+'o^O`O~O"E^O~O`O'A, "ID'E'O`Ux'A`A'Y'A~N "E'A"A`O "A'A^I^I`U`E:
+
+struct ProtocolFrame {
+    int command;                // Protocol action
+    int length;                 // Length of data field
+    char data[FSR_MAXDATALEN];  // Various length field
+};
+
+:"I'U'I"I"O^I`U 'O`IA"A~O`A'Y'EA "E"I'I'A^I"A`U (x'OA "ID`OA"AA`IA^I'E~N 'O"I"AA`O"O'A^O'O~N x 
+'U'AC"I`I"Ix"ITh^I"I'I AE'A^E`IA "filesrv.h"):
+
+const int FSR_SUCCESS = 0;  // Command is performed successfully
+const int FSR_ERROR = 1;    // Cannot perform a command
+const int FSR_READY = 2;    // Server is ready
+const int FSR_DATA = 3;     // Block of data, next block follows
+const int FSR_DATAEND = 4;  // Last block of data
+const int FSR_PUT = 5;      // Put a file
+const int FSR_GET = 6;      // Get a file
+const int FSR_PWD = 7;      // Pring Work Directory
+const int FSR_CD = 8;       // Change directory
+const int FSR_LS = 9;       // List a directory contents
+const int FSR_LOGOUT = 10;  // End a session
+const int FSR_MGET = 11;    // Get a set of files (Multiple get)
+
+"id'e'o'a^i'e~n "e"i'i'a^i"a
+
+FSR_SUCCESS
+    dA`OA"A'AA^O'O~N "I^O 'OA`OxA`O'A "E "E`I'EA^I^O~O
+    'E "I'U^I'ATh'AA^O ~O'ODA^U^I"IA 'U'AxA`O^UA^I'EA 'U'AD`O"I'O'A "E`I'EA^I^O'A.
+    "i^I'A DA`OA"A'AA^O'O~N D`O'E ~O'ODA^U^I"I'I 'U'AxA`O^UA^I'E'E 'U'AD`O"I'O"Ix
+    FSR_PUT 'E FSR_CD. d"I`IA "A'A^I^I`U`E 'E'IAA^O ^I~O`IAx~O`A "A`I'E^I~O.
+
+FSR_ERROR
+    dA`OA"A'AA^O'O~N "I^O 'OA`OxA`O'A "E "E`I'EA^I^O~O D`O'E "I^U'E^A"EA.
+    d"I`IA "A'A^I^I`U`E 'O"I"AA`O"O'E^O ^OA"E'O^O, "ID'E'O`Ux'A`A'Y'E^E "I^U'E^A"E~O.
+
+FSR_READY
+    dA`OA"A'AA^O'O~N "I^O 'OA`OxA`O'A "E "E`I'EA^I^O~O 'E "I'U^I'ATh'AA^O, Th^O"I
+    'OA`OxA`O C"I^O"Ix x`UD"I`I^I'E^OO 'O`IA"A~O`A'Y'E^E 'U'AD`O"I'O "E`I'EA^I^O'A.
+
+FSR_DATA
+    "i'U^I'ATh'AA^O, Th^O"I DA`OA"A'AA^O'O~N ^A`I"I"E "A'A^I^I`U`E, "E"I^O"I`O`U^E ^IA
+    ~Nx`I~NA^O'O~N D"I'O`IA"A^I'E'I, ^O.A. 'U'A ^I'E'I "I^A~N'U'A^OA`IO^I"I ^A~O"AA^O
+    DA`OA"A'A^I 'O`IA"A~O`A'Y'E^E ^A`I"I"E. "e'A"A`O FSR_DATA 'I"I"OA^O
+    DA`OA"A'Ax'A^OO'O~N "E'A"E "I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O (^I'AD`O'E'IA`O,
+    D`O'E x`UD"I`I^IA^I'E'E "E"I'I'A^I"A`U FSR_PUT), ^O'A"E 'E "I^O 'OA`OxA`O'A
+    "E "E`I'EA^I^O~O (D`O'E x`UD"I`I^IA^I'E'E "E"I'I'A^I"A FSR_GET 'E FSR_LS).
+    d"I`IA length "E'A"A`O'A 'O"I"AA`O"O'E^O "A`I'E^I~O DA`OA"A'Ax'AA'I`U`E "A'A^I^I`U`E
+    ("I^I'A ^IA 'I"I"OA^O D`OAx`U^U'A^OO "E"I^I'O^O'A^I^O`U FSR_MAXDATALEN = 2048).
+
+FSR_DATAEND
+    "i'U^I'ATh'AA^O, Th^O"I DA`OA"A'AA^O'O~N D"I'O`IA"A^I'E^E ^A`I"I"E "A'A^I^I`U`E,
+    ^I'AD`O'E'IA`O, D"I'O`IA"A^I~N~N D"I`O~A'E~N 'O"I"AA`O"O'E'I"IC"I AE'A^E`I'A 'E`I'E
+    D"I'O`IA"A^I~N~N 'U'AD'E'OO x `I'E'O^O'E^ICA "A'E`OA"E^O"I`O'E'E. : "I'O^O'A`IO^I"I'I
+    "E"I'I'A^I"A'A 'A^I'A`I"IC'ETh^I'A "E"I'I'A^I"AA FSR_DATA. d`O'EA'I "E`I'EA^I^O"I'I "E'A"A`O'A
+    FSR_DATAEND "I'U^I'ATh'AA^O ~O'ODA^U^I"IA 'U'AxA`O^UA^I'EA 'U'AD`O"I'O'A "E`I'EA^I^O'A,
+    D"I"U^O"I'I~O 'OA`OxA`O x "U^O"I'I 'O`I~OTh'AA ^IA DA`OA"A'AA^O "E"I'I'A^I"A~O FSR_SUCCESS.
+
+FSR_PUT
+    dA`OA"A'AA^O'O~N "I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O D`O'E 'U'AD`O"I'OA ^I'A DA`OA"A'ATh~O AE'A^E`I'A.
+    "I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O. d"I`IA "A'A^I^I`U`E 'O"I"AA`O"O'E^O 'E'I~N AE'A^E`I'A 
+    'E`I'E D~O^OO "E ^IA'I~O. d"I D`O'E^I~N^O'E'E "U^O"I^E "E"I'I'A^I"A`U 'OA`OxA`O "A"I`I"OA^I
+    "I^OxA^O'E^OO "E'A"A`O"I'I FSR_READY, "I'U^I'ATh'A`A'Y'E'I, Th^O"I "I^I "I^O"E`O`U`I
+    AE'A^E`I "A`I~N 'U'AD'E'O'E 'E C"I^O"Ix D`O'E^I'E'I'A^OO 'O"I"AA`O"O'E'I"IA AE'A^E`I'A,
+    'E`I'E FSR_ERROR, A'O`I'E AE'A^E`I ^IA 'I"I"OA^O ^A`U^OO "I^O"E`O`U^O "A`I~N 'U'AD'E'O'E.    
+    : DA`Ox"I'I 'O`I~OTh'AA "E`I'EA^I^O DA`OA"A'AA^O 'OA`OxA`O~O
+    'O"I"AA`O"O'E'I"IA AE'A^E`I'A x 'OA`O'E'E "E'A"A`O"Ix FSR_DATA,
+    'U'A"E'A^ITh'Ex'A`A'Y'A~N'O~N "E'A"A`O"I'I FSR_DATAEND. d`O'E ~O'ODA^U^I"I^E
+    DA`OA"A'AThA AE'A^E`I'A 'OA`OxA`O D"I "I"E"I^ITh'A^I'E`A DA`OA"A'ATh'E "I^OxATh'AA^O "E"I'I'A^I"A"I^E
+    FSR_SUCCESS, D`O'E "I^U'E^A"EA -- FSR_ERROR.
+
+FSR_GET
+    dA`OA"A'AA^O'O~N "I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O D`O'E 'U'AD`O"I'OA ^I'A D`O'EA'I AE'A^E`I'A
+    "I^O 'OA`OxA`O'A. d"I`IA "A'A^I^I`U`E 'O"I"AA`O"O'E^O 'E'I~N AE'A^E`I'A
+    'E`I'E D~O^OO "E ^IA'I~O. a'O`I'E ^O'A"E"I^E AE'A^E`I 'O~O'YA'O^Ox~OA^O ^I'A 'OA`OxA`OA
+    'E "I^O"E`O`U^O ^I'A Th^OA^I'EA, ^O"I 'OA`OxA`O x "I^OxA^O DA`OA"A'AA^O "E`I'EA^I^O~O
+    'O"I"AA`O"O'E'I"IA AE'A^E`I'A 'O D"I'I"I'YO`A 'OA`O'E'E "E"I'I'A^I"A FSR_DATA,
+    'U'A"E'A^ITh'Ex'A`A'YA^E'O~N "E"I'I'A^I"A"I^E FSR_DATAEND. : D`O"I^O'Ex^I"I'I 'O`I~OTh'AA
+    'OA`OxA`O "I^OxATh'AA^O "E"I'I'A^I"A"I^E FSR_ERROR. d"I "I"E"I^ITh'A^I'E`A DA`OA"A'ATh'E
+    AE'A^E`I'A (D"I'O`IA ^A`I"I"E'A FSR_DATAEND) 'OA`OxA`O ^IA DA`OA"A'AA^O "E"I'I'A^I"A~O
+    FSR_SUCCESS, D"I'O"E"I`IO"E~O 'O'A'I'A D"I 'OA^AA "E"I'I'A^I"A'A FSR_DATAEND
+    "I'U^I'ATh'AA^O ~O'ODA^U^I"IA 'U'AxA`O^UA^I'EA DA`OA"A'ATh'E.
+
+FSR_PWD
+    ('O"I"E`O'A'YA^I'EA "I^O Print Working Directory).
+    dA`OA"A'AA^O'O~N "I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O 'E "I'U^I'ATh'AA^O 'U'AD`O"I'O D"I`I^I"IC"I
+    D~O^O'E "E ^OA"E~O'YA^E "A'E`OA"E^O"I`O'E'E. d"I`IA length "E'A"A`O'A 'O"I"AA`O"O'E^O
+    'U^I'AThA^I'EA 0, ^O.A. "A'A^I^I`UA x "U^O"I^E "E"I'I'A^I"AA ^IA DA`OA"A'A`A^O'O~N.
+    'oA`OxA`O "I^OxATh'AA^O ^I'A 'U'AD`O"I'O "E'A"A`O"I'I FSR_DATAEND, D"I`IA "A'A^I^I`U`E
+    "E"I^O"I`O"IC"I 'O"I"AA`O"O'E^O D~O^OO "E ^OA"E~O'YA^E "A'E`OA"E^O"I`O'E'E ^I'A 'OA`OxA`OA.
+
+FSR_CD
+    ('O"I"E`O'A'YA^I'EA "I^O Change working Directory).
+    dA`OA"A'AA^O'O~N "I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O 'E "I'U^I'ATh'AA^O 'U'AD`O"I'O ^I'A
+    'E'U'IA^IA^I'EA ^OA"E~O'YA^E `O'A^A"IThA^E "A'E`OA"E^O"I`O'E'E 'OA`OxA`O'A. d"I`IA data
+    'O"I"AA`O"O'E^O D~O^OO "E ^I"Ix"I^E "A'E`OA"E^O"I`O'E'E. 'oA`OxA`O "I^OxATh'AA^O "E'A"A`O"I'I
+    FSR_SUCCESS x 'O`I~OTh'AA ~O'ODA^U^I"IC"I x`UD"I`I^IA^I'E~N "E"I'I'A^I"A`U 'E`I'E
+    FSR_ERROR x 'O`I~OTh'AA "I^U'E^A"E'E.
+
+FSR_LS
+    ('O"I"E`O'A'YA^I'EA "I^O List).
+    dA`OA"A'AA^O'O~N "I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O 'E "I'U^I'ATh'AA^O 'U'AD`O"I'O ^I'A
+    D"I`I~OThA^I'E~N 'O"I"AA`O"O'E'I"IC"I ^OA"E~O'YA^E "A'E`OA"E^O"I`O'E'E, ^O.A. 'OD'E'O"E'A
+    AE'A^E`I"Ix 'E D"I"A"A'E`OA"E^O"I`O'E^E x ^OA"E~O'YA^E "A'E`OA"E^O"I`O'E'E. 
+    d`O'E "I^U'E^A"EA ("E"IC"A'A "A'E`OA"E^O"I`O'E~N 'U'A"E`O`U^O'A ^I'A Th^OA^I'EA) 'OA`OxA`O
+    DA`OA"A'AA^O "E`I'EA^I^O~O "E'A"A`O FSR_ERROR. : ^I"I`O'I'A`IO^I"I^E 'O'E^O~O'A~A'E'E
+    ("A'E`OA"E^O"I`O'E~N "I^O"E`O`U^O'A ^I'A Th^OA^I'EA) 'OA`OxA`O x "I^OxA^O
+    DA`OA'O`U`I'AA^O "E`I'EA^I^O~O 'OA`O'E`A "E'A"A`O"Ix FSR_DATA, 'U'A"E'A^ITh'Ex'A`A'Y~O`A'O~N
+    "E'A"A`O"I'I FSR_DATAEND. "e'A"O"A`U^E "E'A"A`O 'O"I"AA`O"O'E^O 'U'AD'E'OO `O"Ix^I"I "I^A
+    "I"A^I"I'I AE'A^E`IA 'E`I'E D"I"A"A'E`OA"E^O"I`O'E'E. d"I`IA "data" "E'A"A`O'A 'O"I"AA`O"O'E^O:
+        x ^I~O`IAx"I'I ^A'A^E^OA -- ^O'ED AE'A^E`I'A 'E`I'E D"I"A"A'E`OA"E^O"I`O'E'E,
+             "U^O"I^O ^A'A^E^O 'O"I"I^OxA^O'O^Ox~OA^O D"I`I`A d_type 'O^O`O~O"E^O~O`O`U
+             struct dirent;
+        x ^A'A^E^O'A`E ^I'ATh'E^I'A~N 'O DA`Ox"IC"I -- 'E'I~N AE'A^E`I'A 'E`I'E D"I"A"A'E`OA"E^O"I`O'E'E,
+             'U'A"E'A^ITh'Ex'A`A'YAA~N ^I~O`IAx`U'I ^A'A^E^O"I'I.
+    'o^O'A^I"A'A`O^O^I`U^E 'U'AC"I`I"Ix"ITh^I`U^E AE'A^E`I <dirent.h> 'O"I"AA`O"O'E^O 'O`IA"A~O`A'Y'EA
+    "ID`OA"AA`IA^I'E~N ^O'ED"Ix AE'A^E`I"Ix:
+        DT_UNKNOWN = 0,
+        DT_FIFO = 1,
+        DT_CHR = 2,
+        DT_DIR = 4,
+        DT_BLK = 6,
+        DT_REG = 8,
+        DT_LNK = 10,
+        DT_SOCK = 12,
+        DT_WHT = 14
+
+FSR_MGET
+    dA`OA"A'AA^O'O~N "I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O D`O'E 'U'AD`O"I'OA ^I'A D`O'EA'I 'I^I"I"OA'O^Ox'A
+    AE'A^E`I"Ix "I^O 'OA`OxA`O'A. d"I`IA "A'A^I^I`U`E 'O"I"AA`O"O'E^O ^u'a^a`i"i^i 'E'IA^I'E AE'A^E`I'A,
+    "E"I^O"I`O`U^E 'I"I"OA^O x"E`I`ATh'A^OO "I^A`UTh^I`UA 'O'E'Ix"I`I`U 'E 'UxA'U"A"ITh"E~O "*",
+    "I'U^I'ATh'A`A'Y~O`A D`O"I'E'Ux"I`IO^I~O`A D"I"A'O^O`O"I"E~O, ^IA 'O"I"AA`O"O'A'Y~O`A `O'A'U"AA`I'E^OA`IA^E
+    "A'E`OA"E^O"I`O'E^E "/". d`O"I^O"I"E"I`I 'E'OD"I`I^IA^I'E~N "U^O"I^E "E"I'I'A^I"A`U ^A"I`IAA 'O`I"I"OA^I,
+    ThA'I x 'O`I~OTh'A~N`E D`OA"A`U"A~O'Y'E`E "E"I'I'A^I"A, "I^I D"I"A`O"I^A^I"I "ID'E'O'A^I ^I'E"OA.
+
+
+d`o"i^o"i"e"i`i :`ud"i`i^ia^i'e~n "e"i'i'a^i"a`u FSR_MGET
+
+:`UD"I`I^IA^I'EA "E"I'I'A^I"A`U mget ^I'ATh'E^I'AA^O'O~N 'O DA`OA"A'ATh'E "E'A"A`O'A FSR_MGET
+"I^O "E`I'EA^I^O'A "E 'OA`OxA`O~O. "e'A"A`O FSR_MGET 'A^I'A`I"IC'EThA^I "E'A"A`O~O FSR_GET,
+^O"I`IO"E"I x'IA'O^O"I 'E'IA^I'E AE'A^E`I'A "I^I 'O"I"AA`O"O'E^O ^U'A^A`I"I^I 'E'IA^I'E, "E"I^O"I`O`U^E
+'I"I"OA^O x"E`I`ATh'A^OO "I"A'E^I 'E`I'E ^IA'O"E"I`IO"E"I 'O'E'Ix"I`I"Ix "*", "I'U^I'ATh'A`A'Y'E`E
+x`E"I"O"AA^I'EA D`O"I'E'Ux"I`IO^I"I^E D"I"A'O^O`O"I"E'E, ^IA 'O"I"AA`O"O'A'YA^E `O'A'U"AA`I'E^OA`IA^E
+"A'E`OA"E^O"I`O'E^E. : "I^OxA^O 'OA`OxA`O DA`OA"A'AA^O 'O`IA"A~O`A'Y~O`A 'E^IAE"I`O'I'A~A'E`A.
+
+1. a'O`I'E ^IA^O AE'A^E`I"Ix, 'E'IA^I'A "E"I^O"I`O`U`E D"I"A`E"I"A~N^O D"I"A ^U'A^A`I"I^I,
+   ^O"I 'OA`OxA`O DA`OA"A'AA^O "E'A"A`O FSR_DATAEND, x "E"I^O"I`O"I'I
+   D"I`IA "A`I'E^I`U 'O"I"AA`O"O'E^O 0 ("U^O"I^O "E'A"A`O "I'U^I'ATh'AA^O 'U'AxA`O^UA^I'EA
+   'OD'E'O"E'A 'E'IA^I AE'A^E`I"Ix, D"I"A`E"I"A~N'Y'E`E D"I"A ^U'A^A`I"I^I).
+
+2. a'O`I'E 'OD'E'O"I"E AE'A^E`I"Ix, 'E'IA^I'A "E"I^O"I`O`U`E D"I"A`E"I"A~N^O D"I"A ^U'A^A`I"I^I,
+   ^IAD~O'O^O, ^O"I "A`I~N "E'A"O"A"IC"I AE'A^E`I'A x`UD"I`I^I~NA^O'O~N 'O`IA"A~O`A'Y'E^E "I^A'IA^I
+   "A'A^I^I`U'I'E 'IA"A"O~O 'OA`OxA`O"I'I 'E "E`I'EA^I^O"I'I:
+   -- 'OA`OxA`O DA`OA"A'AA^O "E`I'EA^I^O~O "E'A"A`O FSR_DATA, 'O"I"AA`O"O'A'Y'E^E 'E^IAE"I`O'I'A~A'E`A
+      "I^A "IThA`OA"A^I"I'I AE'A^E`IA. "u^O"I^O "E'A"A`O D"I"A"I^AA^I "E'A"A`O~O, DA`OA"A'Ax'AA'I"I'I~O
+      "I^O 'OA`OxA`O'A "E`I'EA^I^O~O D`O'E x`UD"I`I^IA^I'E'E "E"I'I'A^I"A`U FSR_LS,
+      "I^I x"E`I`ATh'AA^O ^O'ED AE'A^E`I'A ("E"I^O"I`O`U^E x'OAC"A'A `O'AxA^I DT_REG)
+      'E 'E'I~N AE'A^E`I'A, 'U'A"E'A^ITh'Ex'A`A'YAA~N ^I~O`IAx`U'I ^A'A^E^O"I'I;
+   -- "A'A`IO^UA 'OA`OxA`O "I"O'E"A'AA^O "I^OxA^O'A "I^O "E`I'EA^I^O'A. "i^OxA^O"I'I 'I"I"OA^O ^A`U^OO
+      "I"A'E^I 'E'U "Ax~O`E "E'A"A`O"Ix:
+          FSR_READY, A'O`I'E "E`I'EA^I^O C"I^O"Ix D`O'E^I~N^OO "IThA`OA"A^I"I^E AE'A^E`I
+                     "I^O 'OA`OxA`O'A;
+          FSR_ERROR, A'O`I'E "E`I'EA^I^O ^IA C"I^O"Ix D`O'E^I~N^OO AE'A^E`I. : "U^O"I'I
+                     'O`I~OTh'AA x`UD"I`I^IA^I'EA "E"I'I'A^I"A`U FSR_MGET 'U'AxA`O^U'AA^O'O~N.
+   -- A'O`I'E "E`I'EA^I^O "I^OxA^O'E`I 'OA`OxA`O~O "E"I'I'A^I"A"I^E FSR_READY, ^O"I 'OA`OxA`O
+      DA`OA"A'AA^O "E`I'EA^I^O~O 'O"I"AA`O"O'E'I"IA AE'A^E`I'A ^O'A"E "OA, "E'A"E 'E x 'O`I~OTh'AA
+      "E"I'I'A^I"A`U FSR_GET.
+
+3. "a`I~N 'U'AxA`O^UA^I'E~N DA`OA"A'ATh'E 'I^I"I"OA'O^Ox'A AE'A^E`I"Ix 'OA`OxA`O DA`OA"A'AA^O "E`I'EA^I^O~O
+   "E'A"A`O FSR_DATAEND, x "E"I^O"I`O"I'I D"I`IA "A`I'E^I`U 'O"I"AA`O"O'E^O 0.
+
+</pre>
+
+</body>
+</html>
+
