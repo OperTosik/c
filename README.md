@@ -12,5 +12,5 @@
 [Задача 4](https://github.com/OperTosik/c/tree/main/hw/fourth_semester/ml): вариант у всех один.
 Скачайте оба файла.
 Запуск: python3 leastSquares.py
-![alt text](hw/fourth_semester/py/img.png)
+[](hw/fourth_semester/py/img.png)
 После запуска переключитесь на Huber
