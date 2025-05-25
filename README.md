@@ -1,4 +1,4 @@
-**ЗАДАЧИ 4 СЕМЕСТРА*
+**ЗАДАЧИ 4 СЕМЕСТРА**
 
 [Задача 1](https://github.com/OperTosik/c/tree/main/hw/fourth_semester/Filesrv): реализован вариант 3.
 Скачайте все файлы с директории.
