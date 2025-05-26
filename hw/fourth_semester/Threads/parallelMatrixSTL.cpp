@@ -154,7 +154,6 @@ int main() {
     inverseMatrix(a, n, inverse);
     printf("Inverse matrix:\n");
     writeMatrix(stdout, inverse, n, n);
-    delete[] inverse;
 
     /*
     gettimeofday(&timeOfDay, NULL);
@@ -190,12 +189,13 @@ int main() {
     if (g == NULL) {
         perror("Cannot open an output file");
     } else {
-        if (!writeMatrix(g, a, m, n))
+        if (!writeMatrix(g, inverse, n, n))
             perror("Could not write a matrix to the output file");
         fclose(g);
     }
 
     delete[] a;
+    delete[] inverse;
     
     return 0;
 }
